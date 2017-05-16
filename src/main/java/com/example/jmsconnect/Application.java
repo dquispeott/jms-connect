@@ -42,8 +42,8 @@ public class Application {
         JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 
         // Send a message with a POJO - the template reuse the message converter
-        System.out.println("Sending an email message.");
-        jmsTemplate.convertAndSend("mailbox2", new MyPojo("this is part A", "This is part B"));
+        System.out.println("Sending a message.");
+        jmsTemplate.convertAndSend("fooqueue", new MyPojo("this is part A", "This is part B"));
 	}
 
 }
