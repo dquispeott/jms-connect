@@ -1,6 +1,11 @@
 package com.example.jmsconnect;
 
+import java.io.StringWriter;
+
 import javax.jms.ConnectionFactory;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -44,8 +49,20 @@ public class Application {
         // Send a message with a POJO - the template reuse the message converter
         System.out.println("Sending a message.");
         String xmlString = "<message>HELLO XML!</message> ";
+        StringWriter sw = new StringWriter();
+        try{           
+            JAXBContext jc = JAXBContext.newInstance(MyPojoXml.class);
+            Marshaller marshaller = jc.createMarshaller();            
+            marshaller.marshal(new MyPojoXml("JAXB part A","JAXB part B"),sw);                        
+            System.out.println("Received: " +sw.toString());
+            
+        }catch(JAXBException ex){
+        	ex.printStackTrace();
+        }
+        
         jmsTemplate.convertAndSend("fooqueue", new MyPojo("this is part A", "This is part B"));
         jmsTemplate.convertAndSend("fooqueuexml", xmlString);
+        jmsTemplate.convertAndSend("fooqueuejaxb", sw.toString());
 	}
 
 }
