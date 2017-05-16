@@ -59,7 +59,7 @@ public class Application {
         }catch(JAXBException ex){
         	ex.printStackTrace();
         }
-        
+        //sample message
         jmsTemplate.convertAndSend("fooqueue", new MyPojo("this is part A", "This is part B"));
         jmsTemplate.convertAndSend("fooqueuexml", xmlString);
         jmsTemplate.convertAndSend("fooqueuejaxb", sw.toString());
