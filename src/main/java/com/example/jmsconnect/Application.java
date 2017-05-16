@@ -43,7 +43,9 @@ public class Application {
 
         // Send a message with a POJO - the template reuse the message converter
         System.out.println("Sending a message.");
+        String xmlString = "<message>HELLO XML!</message> ";
         jmsTemplate.convertAndSend("fooqueue", new MyPojo("this is part A", "This is part B"));
+        jmsTemplate.convertAndSend("fooqueuexml", xmlString);
 	}
 
 }
